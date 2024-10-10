@@ -7,10 +7,10 @@ function Header() {
   const navigate = useNavigate();
 
   function pathMathRoute(route) {
-    if (route === location.pathname) {
-      return true;
-    }
+    return location.pathname === route;
   }
+
+  console.log("Current Path:", location.pathname); // Debugging log
 
   return (
     <div className="bg-[#1e2626]">
@@ -26,28 +26,30 @@ function Header() {
         <div>
           <ul className="flex space-x-10 mr-12">
             <li
-              className={`py-2 text-[#6457F0] border-b-[3px] border-b-transparent font-semibold text-sm cursor-pointer ${
-                pathMathRoute("/") && "text-white border-b-violet-900"
+              className={`py-2 text-white border-b-[3px] border-b-transparent font-semibold text-sm cursor-pointer ${
+                pathMathRoute("/") ? "text-white border-b-white" : ""
               }`}
               onClick={() => navigate("/")}
             >
               Home
             </li>
             <li
-              className={`py-2 text-[#6457F0] border-b-[3px] border-b-transparent font-semibold text-sm cursor-pointer ${
-                pathMathRoute("/offers") && "text-white border-b-violet-900"
+              className={`py-2 text-white border-b-[3px] border-b-transparent font-semibold text-sm cursor-pointer ${
+                pathMathRoute("/offers") ? "text-white border-b-white" : ""
               }`}
               onClick={() => navigate("/offers")}
             >
               Offers
             </li>
             <li
-              className={`py-2 text-[#6457F0] border-b-[3px] border-b-transparent font-semibold text-sm cursor-pointer ${
-                pathMathRoute("/signIn") && "text-white border-b-violet-900"
+              className={`py-2 border-b-[3px] font-semibold text-sm cursor-pointer ${
+                pathMathRoute("/signIn")
+                  ? "text-red-500 border-b-red-900"
+                  : "text-white border-b-transparent"
               }`}
               onClick={() => navigate("/signIn")}
             >
-              SignIn
+              Sign In
             </li>
           </ul>
         </div>
