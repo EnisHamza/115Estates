@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import OAuth from "../components/OAuth";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,13 +14,31 @@ function SignIn() {
     password: "",
   });
   const { email, password } = formData;
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   function onChange(e) {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userCredential.user) {
+        toast.success("Sign In Successfully");
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error("Bad user credentials");
+    }
   }
 
   return (
@@ -34,7 +54,7 @@ function SignIn() {
 
       {/* Form Container */}
       <div className="flex flex-col justify-center items-center w-1/2 sm:items-center sm:justify-center sm:mt-6">
-        <form className="w-full max-w-[400px]">
+        <form className="w-full max-w-[400px]" onSubmit={onSubmit}>
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="email"
