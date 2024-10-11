@@ -20,7 +20,7 @@ function SignUp() {
     password: "",
   });
   const { name, email, password } = formData;
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   function onChange(e) {
     setFormData((prevState) => ({
@@ -47,7 +47,7 @@ function SignUp() {
       formDataCopy.timestamp = serverTimestamp();
       console.log(user);
       await setDoc(doc(db, "users", user.uid), formDataCopy);
-      //toast.success("Sign up was successful");
+      toast.success("Sign up was successful");
       navigate("/");
     } catch (error) {
       toast.error("Something went wrong with the registration");
@@ -70,7 +70,7 @@ function SignUp() {
         <form className="w-full max-w-[400px]" onSubmit={onSubmit}>
           <div className="relative z-0 w-full mb-5 group">
             <input
-              type="name"
+              type="text"
               name="name"
               id="name"
               value={name}
