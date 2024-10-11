@@ -10,8 +10,6 @@ function Header() {
     return location.pathname === route;
   }
 
-  console.log("Current Path:", location.pathname); // Debugging log
-
   return (
     <div className="bg-[#1e2626]">
       <header className="flex justify-between items-center px-3">

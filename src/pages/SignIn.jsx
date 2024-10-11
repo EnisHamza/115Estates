@@ -99,7 +99,7 @@ function SignIn() {
           <OAuth />
           <p className="mt-7 text-center">
             <Link
-              to="/forgot-password"
+              to="/forgotPassword"
               className="text-sm text-red-500 hover:text-red-900 transition duration-200 ease-in-out"
             >
               Forgot password?
