@@ -1,16 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { getAuth, updateProfile } from "firebase/auth";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import bg from "../images/bg.png";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
@@ -28,7 +19,7 @@ function Profile() {
 
   function onLogout() {
     auth.signOut();
-    navigate("/");
+    navigate("/signIn");
   }
 
   function onChange(e) {
@@ -61,12 +52,14 @@ function Profile() {
 
   return (
     <div
-      className="w-full h-screen"
+      className="w-full h-screen sm:h-full"
       style={{
         backgroundImage: `url(${bg})`,
-        backgroundSize: "contain",
+        backgroundSize: "cover",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         display: "flex",
+        height: "100vh",
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -75,7 +68,7 @@ function Profile() {
         className="p-20 border-4 rounded shadow-lg text-white"
         style={{
           background: "rgba(26, 35, 101, 0.5)", // Semi-transparent background
-          backdropFilter: "blur(12px)", // Apply blur
+          backdropFilter: "blur(16px)", // Apply blur
         }}
       >
         <h2 className="flex flex-row justify-center mb-12 text-2xl font-bold">
@@ -124,6 +117,17 @@ function Profile() {
             >
               Sign Out
             </p>
+          </div>
+          <div className="flex flex-row justify-between">
+            <button
+              type="submit"
+              className="border p-2 rounded-md px-8 border-neutral-100"
+            >
+              <Link to="/createListing">Add Listing</Link>
+            </button>
+            <button type="submit" className="border p-2 px-8 rounded-lg">
+              <Link to="/myListing">My Listing</Link>
+            </button>
           </div>
         </form>
       </div>
