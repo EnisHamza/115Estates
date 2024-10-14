@@ -55,7 +55,7 @@ function Profile() {
       className="w-full h-screen sm:h-full"
       style={{
         backgroundImage: `url(${bg})`,
-        backgroundSize: "cover",
+        backgroundSize: "contain",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         display: "flex",

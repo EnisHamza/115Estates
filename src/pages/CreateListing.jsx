@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 function CreateListing() {
   const navigate = useNavigate();
@@ -170,9 +171,10 @@ function CreateListing() {
     toast.success("Listing created");
     navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   }
-  //if (loading) {
-  //return <Spinner />;
-  // }
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <main className="max-w-md px-2 mx-auto">
       <h1 className="text-3xl text-center mt-6 font-bold text-white">

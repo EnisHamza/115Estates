@@ -19,6 +19,7 @@ import {
 import { db } from "../firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import Spinner from "../components/Spinner";
 
 export default function CreateListing() {
   const navigate = useNavigate();
@@ -209,9 +210,9 @@ export default function CreateListing() {
     navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   }
 
-  //if (loading) {
-  //return <Spinner />;
-  //}
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <main className="max-w-md px-2 mx-auto">
       <h1 className="text-3xl text-center mt-6 font-bold text-white">
