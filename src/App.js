@@ -12,6 +12,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreateListing from "./pages/CreateListing";
 import MyListing from "./pages/MyListing";
 import EditListing from "./pages/EditListing";
+import Listing from "./pages/Listing";
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
           <Route path="editListing" element={<PrivateRoute />}>
             <Route path="/editListing/:listingId" element={<EditListing />} />
           </Route>
+          <Route
+            path="/category/:categoryName/:listingId"
+            element={<Listing />}
+          />
         </Routes>
       </Router>
       <ToastContainer
