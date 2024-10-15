@@ -117,7 +117,7 @@ export default function Listing() {
             <span className="font-semibold">Description - </span>
             {listing.description}
           </p>
-          <ul className="flex items-center space-x-2 sm:space-x-10 text-sm font-semibold mb-6">
+          <ul className="flex items-center space-x-2 sm:space-x-0 text-sm font-semibold mb-6 sm:grid sm:grid-cols-3">
             <li className="flex items-center whitespace-nowrap">
               <FaBed className="text-lg mr-1" />
               {+listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : "1 Bed"}
@@ -126,12 +126,12 @@ export default function Listing() {
               <FaBath className="text-lg mr-1" />
               {+listing.bathrooms > 1 ? `${listing.bathrooms} Baths` : "1 Bath"}
             </li>
-            <li className="flex items-center whitespace-nowrap">
+            <li className="flex items-center whitespace-nowrap sm:mr-0">
               <FaParking className="text-lg mr-1" />
               {listing.parking ? "Parking spot" : "No parking"}
             </li>
             <li className="flex items-center whitespace-nowrap">
-              <FaChair className="text-lg mr-1" />
+              <FaChair className="text-lg mr-1 " />
               {listing.furnished ? "Furnished" : "Not furnished"}
             </li>
           </ul>
@@ -149,7 +149,7 @@ export default function Listing() {
             <Contact userRef={listing.userRef} listing={listing} />
           )}
         </div>
-        <div className="w-full h-[200px] md:h-[400px] z-10 overflow-x-hidden mt-6 md:mt-0 md:ml-2">
+        <div className="w-11/12 sm:w-lvh h-[200px] h-[400px] z-10 overflow-x-hidden mt-6 sm:mt-4">
           <MapContainer
             center={[listing.geolocation.lat, listing.geolocation.lng]}
             zoom={13}
