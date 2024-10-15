@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAuth, updateProfile } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
-import bg from "../images/bg.png";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 
@@ -29,20 +28,13 @@ function Profile() {
     }));
   }
 
-  async function onSubmit() {
+  async function onSubmit(e) {
+    e.preventDefault();
     try {
       if (auth.currentUser.displayName !== name) {
-        //update display name in firebase auth
-        await updateProfile(auth.currentUser, {
-          displayName: name,
-        });
-
-        // update name in the firestore
-
+        await updateProfile(auth.currentUser, { displayName: name });
         const docRef = doc(db, "users", auth.currentUser.uid);
-        await updateDoc(docRef, {
-          name,
-        });
+        await updateDoc(docRef, { name });
       }
       toast.success("Profile details updated");
     } catch (error) {
@@ -51,83 +43,84 @@ function Profile() {
   }
 
   return (
-    <div
-      className="w-full h-screen sm:h-full"
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: "contain",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        display: "flex",
-        height: "100vh",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        className="p-20 border-4 rounded shadow-lg text-white"
-        style={{
-          background: "rgba(26, 35, 101, 0.5)", // Semi-transparent background
-          backdropFilter: "blur(16px)", // Apply blur
-        }}
-      >
-        <h2 className="flex flex-row justify-center mb-12 text-2xl font-bold">
-          My Profile
-        </h2>
-        <form>
-          {/* Name Input */}
-
-          <input
-            type="text"
-            id="name"
-            value={name}
-            disabled={!changeDetail}
-            onChange={onChange}
-            className={`mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition ease-in-out ${
-              changeDetail && "bg-red-200 focus:bg-red-200"
-            }`}
+    <div className="flex items-center justify-center w-full h-screen bg-gradient-to-r from-purple-500 to-blue-600">
+      <div className="bg-white bg-opacity-90 p-10 rounded-3xl shadow-2xl text-gray-800 max-w-md w-full">
+        <div className="flex flex-col items-center mb-8">
+          <img
+            src={
+              auth.currentUser.photoURL ||
+              `https://ui-avatars.com/api/?name=${name}&background=random&color=4960EF`
+            }
+            alt="Profile"
+            className="w-32 h-32 rounded-full border-4 border-purple-400 shadow-lg mb-4 transform transition-transform duration-300 hover:scale-105"
           />
+          <h2 className="text-4xl font-bold text-center">User Profile</h2>
+        </div>
+        <form onSubmit={onSubmit} className="space-y-6">
+          <div className="flex flex-col">
+            <label htmlFor="name" className="mb-1 text-sm font-medium">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              disabled={!changeDetail}
+              onChange={onChange}
+              className={`w-full h-11 px-4 py-3 text-lg rounded-lg border transition duration-200 ease-in-out ${
+                changeDetail
+                  ? "border-blue-400 bg-white"
+                  : "border-gray-300 bg-gray-100"
+              }`}
+              placeholder="Enter your name"
+            />
+          </div>
 
-          {/* Email Input */}
+          <div className="flex flex-col">
+            <label htmlFor="email" className="mb-1 text-sm font-medium">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              disabled
+              className="w-full h-11 px-4 py-3 text-lg bg-gray-100 rounded-lg border border-gray-300"
+            />
+          </div>
 
-          <input
-            type="email"
-            id="email"
-            value={email}
-            disabled
-            className="mb-6 w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition ease-in-out"
-          />
-
-          <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6">
-            <p className="flex items-center ">
-              Want to change name?
+          <div className="flex justify-between items-center text-sm">
+            <p className="text-gray-600">
+              Want to change your name?
               <span
                 onClick={() => {
                   changeDetail && onSubmit();
                   setChangeDetail((prevState) => !prevState);
                 }}
-                className="text-red-600 hover:text-red-700 font-bold transition ease-in-out duration-200 ml-1 cursor-pointer"
+                className="text-blue-600 hover:text-blue-800 font-semibold cursor-pointer ml-1"
               >
                 {changeDetail ? "Apply change" : "Edit"}
               </span>
             </p>
             <p
               onClick={onLogout}
-              className="text-amber-400 hover:text-amber-800 font-bold text-base transition duration-200 ease-in-out cursor-pointer"
+              className="text-red-600 hover:text-red-800 font-semibold cursor-pointer"
             >
               Sign Out
             </p>
           </div>
-          <div className="flex flex-row justify-between">
-            <button
-              type="submit"
-              className="border p-2 rounded-md px-8 border-neutral-100"
-            >
-              <Link to="/createListing">Add Listing</Link>
-            </button>
-            <button type="submit" className="border p-2 px-8 rounded-lg">
-              <Link to="/myListing">My Listing</Link>
-            </button>
+
+          <div className="flex justify-between mt-6">
+            <Link to="/createListing">
+              <button className="bg-green-500 text-white px-4 py-2 rounded-lg shadow transition hover:bg-green-600">
+                Add Listing
+              </button>
+            </Link>
+            <Link to="/myListing">
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow transition hover:bg-blue-600">
+                My Listing
+              </button>
+            </Link>
           </div>
         </form>
       </div>
