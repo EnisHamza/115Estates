@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { db } from "../firebase.js";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import ListingItem from "../components/ListingItem";
